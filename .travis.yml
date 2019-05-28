@@ -1,6 +1,10 @@
 language: node_js
 sudo: true
 
+env:
+  global:
+  - SAUCE_USERNAME=raozhiming
+
 matrix:
   include:
     # - os: osx
@@ -11,13 +15,13 @@ matrix:
     #       taps: homebrew/cask-versions
     #       casks: adoptopenjdk8
 
-    - os: osx
-      osx_image: xcode10.2
-      env: NODEJS_VERSION=11 BUILD_EPKSIGNER=ON
-      addons:
-        homebrew:
-          taps: homebrew/cask-versions
-          casks: adoptopenjdk8
+    # - os: osx
+    #   osx_image: xcode10.2
+    #   env: NODEJS_VERSION=11 BUILD_EPKSIGNER=ON
+    #   addons:
+    #     homebrew:
+    #       taps: homebrew/cask-versions
+    #       casks: adoptopenjdk8
 
     # - language: android
     #   env: NODEJS_VERSION=10
@@ -38,14 +42,14 @@ matrix:
           - build-tools-28.0.3
           - android-27
 
-    - language: cpp
-      dist: xenial
-      env: BUILD_EPKSIGNER
-      before_install:
-      install:
-      script:
-        - $TRAVIS_BUILD_DIR/ToolChains/src/epksigner/build.sh
-        - $TRAVIS_BUILD_DIR/ToolChains/src/epksigner/_build/sample/sample
+    # - language: cpp
+    #   dist: xenial
+    #   env: BUILD_EPKSIGNER
+    #   before_install:
+    #   install:
+    #   script:
+    #     - $TRAVIS_BUILD_DIR/ToolChains/src/epksigner/build.sh
+    #     - $TRAVIS_BUILD_DIR/ToolChains/src/epksigner/_build/sample/sample
 
 
 before_install:
@@ -82,3 +86,5 @@ script:
     fi
   # - cd $TRAVIS_BUILD_DIR/Runtime/platforms/android && gradle assembleRelease &&
   - ls -l $TRAVIS_BUILD_DIR/Runtime/platforms/android/app/build/outputs/apk/debug/
+  - git clone --branch=trinity https://github.com/raozhiming/cordova-paramedic /tmp/paramedic && pushd /tmp/paramedic && npm install && popd
+  - node /tmp/paramedic/main.js --config pr/android-7.0 --projectDir $TRAVIS_BUILD_DIR/Runtime --shouldUseSauce --buildName trinity-$TRAVIS_JOB_NUMBER --buildId elastos-trinity --skipMainTests

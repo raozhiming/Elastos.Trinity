@@ -1,8 +1,8 @@
 Elastos Trinity
 ==========================
-|Android & IOS|Android(Windows)|
-|:-:|:-:|
-|[![Build Status](https://travis-ci.org/elastos/Elastos.Trinity.svg)](https://travis-ci.org/elastos/Elastos.Trinity)|[![Build status](https://ci.appveyor.com/api/projects/status/hjyv761on883jors?svg=true)](https://ci.appveyor.com/project/Elastos/elastos-trinity)|
+|Android & IOS|Android(Windows)|SauceLabs|
+|:-:|:-:|:-:|
+|[![Build Status](https://travis-ci.org/elastos/Elastos.Trinity.svg)](https://travis-ci.org/elastos/Elastos.Trinity)|[![Build status](https://ci.appveyor.com/api/projects/status/hjyv761on883jors?svg=true)](https://ci.appveyor.com/project/Elastos/elastos-trinity)|[![Sauce Test Status](https://saucelabs.com/buildstatus/raozhiming)](https://saucelabs.com/u/raozhiming)
 
 ## Introduction
 

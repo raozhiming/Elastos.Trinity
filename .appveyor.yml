@@ -1,5 +1,4 @@
-image:
-  - Visual Studio 2017
+image: Visual Studio 2017
 
 environment:
   ANDROID_HOME: "C:\\ProgramData\\Microsoft\\AndroidSDK\\25"
@@ -14,6 +13,8 @@ install:
   - echo y | "%ANDROID_HOME%\tools\bin\sdkmanager.bat" "cmake;3.10.2.4988404"
   # - echo y | "%ANDROID_HOME%\tools\bin\sdkmanager.bat" "patcher;v4"
   # - echo y | "%ANDROID_HOME%\tools\bin\sdkmanager.bat" "ndk-bundle"
+  - cmd: "%ANDROID_HOME%\tools\bin\sdkmanager.bat" --version
+  - cmd: ls "C:\\ProgramData\\Microsoft\\AndroidSDK
   - git submodule update --init --recursive
 
 build_script:

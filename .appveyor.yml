@@ -21,7 +21,8 @@ build_script:
   - cmd: unzip -q C:\projects\gradle-4.6-bin.zip -d  C:\projects\
   # - cmd: set ANDROID_NDK_HOME="C:\\ProgramData\\Microsoft\\AndroidNDK64\\android-ndk-r17"
   - cmd: ls -l "C:\\ProgramData\\Microsoft\\AndroidNDK64"
-  - cmd: set Path=C:\projects\gradle-4.6\bin;C:\ProgramData\Microsoft\AndroidSDK\25\tools;C:\ProgramData\Microsoft\AndroidSDK\25\build-tools;C:\ProgramData\Microsoft\AndroidSDK\25\platform-tools;%Path%
+  # - cmd: set Path=C:\projects\gradle-4.6\bin;C:\ProgramData\Microsoft\AndroidSDK\25\tools;C:\ProgramData\Microsoft\AndroidSDK\25\build-tools;C:\ProgramData\Microsoft\AndroidSDK\25\platform-tools;%Path%
+  - cmd: set Path=C:\projects\gradle-4.6\bin;%Path%
   - cmd: set
   - cmd: ls %ANDROID_HOME%
   - cmd: ls %ANDROID_NDK_HOME%

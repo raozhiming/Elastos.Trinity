@@ -10,10 +10,8 @@ install:
   - echo y | "%ANDROID_HOME%\tools\android.bat" update sdk -u -a -t build-tools-27.0.0
   - echo y | "%ANDROID_HOME%\tools\android.bat" update sdk -u -a -t build-tools-28.0.3
   - echo y | "%ANDROID_HOME%\tools\android.bat" update sdk -u -a -t android-27
-  - echo y | "%ANDROID_HOME%\tools\android.bat" update sdk -u -a -t tool
-  - echo y | "%ANDROID_HOME%\tools\android.bat" update sdk -u -a -t platform
-  - "%ANDROID_HOME%\tools\android.bat" update sdk
   - echo y | "%ANDROID_HOME%\tools\android.bat" --help
+  - echo y | "%ANDROID_HOME%\tools\bin\sdkmanager.bat"  "cmake;3.10.2.4988404"
   - git submodule update --init --recursive
 
 build_script:

@@ -5,6 +5,7 @@ environment:
   ANDROID_NDK_HOME: "C:\\ProgramData\\Microsoft\\AndroidNDK64\\android-ndk-r17"
 
 install:
+  - echo y | "%ANDROID_HOME%\tools\android.bat" update sdk -u -a -t platforms;android-28
   - echo y | "%ANDROID_HOME%\tools\android.bat" update sdk -u -a -t tools
   - echo y | "%ANDROID_HOME%\tools\android.bat" update sdk -u -a -t platform-tools
   - echo y | "%ANDROID_HOME%\tools\android.bat" update sdk -u -a -t build-tools-27.0.0

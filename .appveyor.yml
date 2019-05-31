@@ -23,7 +23,7 @@ build_script:
   - cmd: set
   # - cmd: ls %ANDROID_NDK_HOME%
   # - cmd: ls %ANDROID_NDK_HOME%\platforms
-  - cmd: ls %ANDROID_HOME%\ndk-bundle
+  # - cmd: ls %ANDROID_HOME%\ndk-bundle
   - cmd: npm install -g cordova ionic
   - cmd: python ToolChains/bin/build all
   - cmd: ls -l Runtime/platforms/android/app/build/outputs/apk/debug/

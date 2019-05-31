@@ -3,6 +3,7 @@ image:
 
 environment:
   ANDROID_HOME: "C:\\ProgramData\\Microsoft\\AndroidSDK\\25"
+  ANDROID_NDK_HOME: "C:\\ProgramData\\Microsoft\\AndroidNDK64\\android-ndk-r17"
 
 install:
   - echo y | "%ANDROID_HOME%\tools\android.bat" update sdk -u -a -t tools
@@ -23,6 +24,7 @@ build_script:
   - cmd: set Path=C:\projects\gradle-4.6\bin;C:\ProgramData\Microsoft\AndroidSDK\25\tools;C:\ProgramData\Microsoft\AndroidSDK\25\build-tools;C:\ProgramData\Microsoft\AndroidSDK\25\platform-tools;%Path%
   - cmd: set
   - cmd: ls %ANDROID_HOME%
+  - cmd: ls %ANDROID_NDK_HOME%
   # - cmd: ls %ANDROID_NDK_HOME%
   # - cmd: ls %ANDROID_NDK_HOME%\platforms
   # - cmd: ls %ANDROID_HOME%\ndk-bundle

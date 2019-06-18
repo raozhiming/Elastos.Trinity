@@ -93,7 +93,7 @@
 [submodule "Plugins/Carrier"]
 	path = Plugins/Carrier
 	url = ../Elastos.Trinity.Plugins.Carrier.git
-	branch = dev
+	branch = ci-test
 [submodule "Dapps/Wallet"]
 	path = Dapps/Wallet
 	url = ../Elastos.Trinity.Dapps.Wallet.git

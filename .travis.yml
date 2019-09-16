@@ -89,15 +89,15 @@ install:
   - npm install -g cordova ionic
 
 script:
-  # - $TRAVIS_BUILD_DIR/ToolChains/bin/build all
-  # - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
-  #     cd $TRAVIS_BUILD_DIR/Runtime/platforms/ios && xcodebuild -showsdks;
-  #     sudo xcode-select -switch /Applications/Xcode.app/Contents/Developer/;
-  #     xcodebuild -scheme Elastos build -sdk iphonesimulator;
-  #   fi
-  # # - cd $TRAVIS_BUILD_DIR/Runtime/platforms/android && gradle assembleRelease &&
-  # - ls -l $TRAVIS_BUILD_DIR/Runtime/platforms/android/app/build/outputs/apk/debug/
-  #
+  - $TRAVIS_BUILD_DIR/ToolChains/bin/build all
+  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
+      cd $TRAVIS_BUILD_DIR/Runtime/platforms/ios && xcodebuild -showsdks;
+      sudo xcode-select -switch /Applications/Xcode.app/Contents/Developer/;
+      xcodebuild -scheme Elastos build -sdk iphonesimulator;
+    fi
+  # - cd $TRAVIS_BUILD_DIR/Runtime/platforms/android && gradle assembleRelease &&
+  - ls -l $TRAVIS_BUILD_DIR/Runtime/platforms/android/app/build/outputs/apk/debug/
+
   # - if [[ "$TRAVIS_EVENT_TYPE" == "cron" && "$TRAVIS_BRANCH" == "dev" && "$DEPLOY" != "" ]]; then
   - if [[ "$TRAVIS_BRANCH" == "dev" && "$DEPLOY" != "" ]]; then
       .ci_scripts/checkCommit.sh;
@@ -121,11 +121,11 @@ deploy:
   provider: releases
   api_key: $GIT_TOKEN
   file_glob: true
-  file: $TRAVIS_TAG-$BUILD_ENV*.tar.gz
+  file: $TRAVIS_BUILD_DIR/Runtime/platforms/android/app/build/outputs/apk/debug/*.apk
   skip_cleanup: true
   prerelease: true
   on:
     condition: $DEPLOY != ""
-    # branches:
-    #   only:
-    #     - master
+    branches:
+      only:
+        - dev

@@ -8,7 +8,7 @@ if [ "$path" = "ToolChains" ]; then
     return 0
 else
     if
-        git log --since=1.days --grep="ci-skip" --grep="skip-ci" --invert-grep -i | grep Author
+        git log --since=10.days --grep="ci-skip" --grep="skip-ci" --invert-grep -i | grep Author
     then
         echo "find commit"
         return 1

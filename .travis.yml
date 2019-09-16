@@ -3,35 +3,35 @@ sudo: true
 
 matrix:
   include:
-    - os: osx
-      osx_image: xcode10.2
-      env: NODEJS_VERSION=11 NDK=r18b
-      addons:
-        homebrew:
-          taps: homebrew/cask-versions
-          casks: adoptopenjdk8
+    # - os: osx
+    #   osx_image: xcode10.2
+    #   env: NODEJS_VERSION=11 NDK=r18b
+    #   addons:
+    #     homebrew:
+    #       taps: homebrew/cask-versions
+    #       casks: adoptopenjdk8
 
-    - os: osx
-      language: cpp
-      osx_image: xcode10.2
-      env: BUILD_EPKSIGNER
-      before_install:
-      install:
-        - brew install shunit2
-      script:
-        - $TRAVIS_BUILD_DIR/ToolChains/src/epksigner/build.sh
-        - $TRAVIS_BUILD_DIR/ToolChains/src/epksigner/_build/sample/sample
-        - echo "---- use default python ----"
-        - $TRAVIS_BUILD_DIR/ToolChains/tests/sign_epk_test.sh
-        - $TRAVIS_BUILD_DIR/ToolChains/tests/verify_epk_test.sh
-        - echo "---- use python3 ----"
-        - export PYTHON3=ON
-        - $TRAVIS_BUILD_DIR/ToolChains/tests/sign_epk_test.sh
-        - $TRAVIS_BUILD_DIR/ToolChains/tests/verify_epk_test.sh
+    # - os: osx
+    #   language: cpp
+    #   osx_image: xcode10.2
+    #   env: BUILD_EPKSIGNER
+    #   before_install:
+    #   install:
+    #     - brew install shunit2
+    #   script:
+    #     - $TRAVIS_BUILD_DIR/ToolChains/src/epksigner/build.sh
+    #     - $TRAVIS_BUILD_DIR/ToolChains/src/epksigner/_build/sample/sample
+    #     - echo "---- use default python ----"
+    #     - $TRAVIS_BUILD_DIR/ToolChains/tests/sign_epk_test.sh
+    #     - $TRAVIS_BUILD_DIR/ToolChains/tests/verify_epk_test.sh
+    #     - echo "---- use python3 ----"
+    #     - export PYTHON3=ON
+    #     - $TRAVIS_BUILD_DIR/ToolChains/tests/sign_epk_test.sh
+    #     - $TRAVIS_BUILD_DIR/ToolChains/tests/verify_epk_test.sh
 
     - language: android
       dist: trusty
-      env: NODEJS_VERSION=12 NDK=r18b
+      env: NODEJS_VERSION=12 NDK=r18b DEPLOY=TRUE
       android:
         components:
           - tools
@@ -89,11 +89,41 @@ install:
   - npm install -g cordova ionic
 
 script:
-  - $TRAVIS_BUILD_DIR/ToolChains/bin/build all
-  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
-      cd $TRAVIS_BUILD_DIR/Runtime/platforms/ios && xcodebuild -showsdks;
-      sudo xcode-select -switch /Applications/Xcode.app/Contents/Developer/;
-      xcodebuild -scheme Elastos build -sdk iphonesimulator;
+  # - $TRAVIS_BUILD_DIR/ToolChains/bin/build all
+  # - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
+  #     cd $TRAVIS_BUILD_DIR/Runtime/platforms/ios && xcodebuild -showsdks;
+  #     sudo xcode-select -switch /Applications/Xcode.app/Contents/Developer/;
+  #     xcodebuild -scheme Elastos build -sdk iphonesimulator;
+  #   fi
+  # # - cd $TRAVIS_BUILD_DIR/Runtime/platforms/android && gradle assembleRelease &&
+  # - ls -l $TRAVIS_BUILD_DIR/Runtime/platforms/android/app/build/outputs/apk/debug/
+  #
+  - if [[ "$TRAVIS_EVENT_TYPE" == "cron" && "$TRAVIS_BRANCH" == "dev" && "$DEPLOY" != "" ]]; then
+      ret=.ci_scripts/checkCommit.sh;
+      if [[ "$ret" -ne 1 ]]; then
+        echo "no commit, do not upload apk!";
+        DEPLOY="";
+      fi;
+    else
+      DEPLOY="";
     fi
-  # - cd $TRAVIS_BUILD_DIR/Runtime/platforms/android && gradle assembleRelease &&
-  - ls -l $TRAVIS_BUILD_DIR/Runtime/platforms/android/app/build/outputs/apk/debug/
+
+before_deploy:
+  # Set up git user name and tag this commit
+  - git config --local user.name "raozhiming"
+  - git config --local user.email "raozhiming@elastos.org"
+  - export TRAVIS_TAG=${TRAVIS_TAG:-$(date +'%Y%m%d%H')-$(git log --format=%h -1)}
+  - git tag $TRAVIS_TAG
+
+deploy:
+  provider: releases
+  api_key: $GIT_TOKEN
+  file_glob: true
+  file: $TRAVIS_TAG-$BUILD_ENV*.tar.gz
+  skip_cleanup: true
+  prerelease: true
+  on:
+    condition: $DEPLOY != ""
+    # branches:
+    #   only:
+    #     - master

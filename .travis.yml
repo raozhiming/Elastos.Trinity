@@ -98,7 +98,8 @@ script:
   # # - cd $TRAVIS_BUILD_DIR/Runtime/platforms/android && gradle assembleRelease &&
   # - ls -l $TRAVIS_BUILD_DIR/Runtime/platforms/android/app/build/outputs/apk/debug/
   #
-  - if [[ "$TRAVIS_EVENT_TYPE" == "cron" && "$TRAVIS_BRANCH" == "dev" && "$DEPLOY" != "" ]]; then
+  # - if [[ "$TRAVIS_EVENT_TYPE" == "cron" && "$TRAVIS_BRANCH" == "dev" && "$DEPLOY" != "" ]]; then
+  - if [[ "$TRAVIS_BRANCH" == "dev" && "$DEPLOY" != "" ]]; then
       ret=.ci_scripts/checkCommit.sh;
       if [[ "$ret" -ne 1 ]]; then
         echo "no commit, do not upload apk!";

@@ -100,7 +100,8 @@ script:
   #
   # - if [[ "$TRAVIS_EVENT_TYPE" == "cron" && "$TRAVIS_BRANCH" == "dev" && "$DEPLOY" != "" ]]; then
   - if [[ "$TRAVIS_BRANCH" == "dev" && "$DEPLOY" != "" ]]; then
-      ret=.ci_scripts/checkCommit.sh;
+      .ci_scripts/checkCommit.sh;
+      ret=$?;
       if [[ "$ret" -ne 1 ]]; then
         echo "no commit, do not upload apk!";
         DEPLOY="";
